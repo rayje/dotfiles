@@ -1,0 +1,152 @@
+if [ -z "$HOST" ]; then
+    export HOST=$(hostname -s)
+fi
+
+ana() {
+  python_location=$(which python)
+  if [ "$python_location" != "/Users/raylandjeans/anaconda/bin/python" ]; then
+    export OLDPATH=$PATH
+    export PATH="/Users/raylandjeans/anaconda/bin:$PATH"
+  fi
+}
+
+deana() {
+  python_location=$(which python)
+  if [ "$python_location" == "/Users/raylandjeans/anaconda/bin/python"  ]; then
+    export PATH=$OLDPATH
+  fi
+}
+
+sg() {
+    if [ $# -lt 2 ]; then
+        echo "Usage sg <datacenter> <servername>"
+        echo "e.g. sg stlinkd-001"
+        exit 0
+    fi
+     
+    dc=""
+    domain="sendgrid.net"
+     
+    case $1 in
+    sjc) dc="sjc1."
+    ;;
+    iad) dc="iad1."
+    ;;
+    sin) dc="sin1."
+    ;;
+    sl) dc=""
+    ;;
+    *) echo "unknown dc $1"
+    exit 0
+    ;;
+    esac
+     
+    ssh -A "rjeans@$2.$dc$domain"
+}
+
+sjc() { sg sjc $@ ;}
+iad() { sg iad $@ ;}
+sin() { sg sin $@ ;}
+#sl() { sg sl $@ ;}
+
+tree() {
+    tree_dir=.
+    if [ $# -eq 1 ]; then
+        tree_dir=$1
+    fi
+    find $tree_dir -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+}
+
+findjar() {
+    if [[ $# != '2' ]]; then
+        echo "Usage: findjar dir2search class"
+    else
+        for i in $(find $1 -name '*.jar'); do ul $i | grep $2 >/dev/null; if [[ $? == '0' ]]; then echo $i; fi; done
+    fi
+}
+
+g2scfg() {
+    open -a Go2Shell --args config
+}
+
+openfile() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: openfile <filename>"
+        exit 1
+    fi
+
+    f=$(find . -name $1)
+    if [ -z "$f" ]; then
+        echo "File not found: $1"
+        echo $f
+    else
+        vi $f
+    fi
+}
+
+disable_dashboard() {
+    defaults write com.apple.dashboard mcx-disabled -boolean YES && killall Dock
+}
+
+enable_dashboard() {
+    defaults write com.apple.dashboard mcx-disabled -boolean NO && killall Dock
+}
+
+start_graphite() {
+    docker run -d --name graphite -p 80:80 -p 2003:2003 -p 8125:8125/udp hopsoft/graphite-statsd
+}
+
+chef_init() {
+    eval "$(chef shell-init bash)"
+}
+
+go_dir() {
+    dir=$(find ~/dev/go/src -type d -maxdepth 4 -name $1)
+    
+    if [ -z $dir ]; then 
+        echo "Not Found"; 
+    else 
+        cd $dir
+    fi
+}
+
+
+USER=$(id -un)
+export PS1='\[\033]0;${USER}@${HOST} \w\007\033['${PROMPT_COLOR:-36m}'\]${USER}@${HOST} \w\n\[\033[30;0m\]$ '
+
+alias l="ls -ltr"
+alias la="ls -latr"
+alias vi="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias ..="cd .."
+alias 2..="cd ../../"
+alias 3..="cd ../../../"
+alias 4..="cd ../../../../"
+alias 5..="cd ../../../../../"
+
+alias json="python -m json.tool"
+alias gd=go_dir
+
+# TODO: Figure out what this is used for
+#if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+#export PYENV_ROOT=/usr/local/opt/pyenv
+
+export GOPATH="/Users/raylandjeans/dev/go"
+#export GOROOT="/usr/local/go"
+
+export PATH="$PATH:/Users/raylandjeans/bin:$GOPATH/bin"
+export PATH="$PATH:/usr/local/sbin"
+
+css() {
+    docker run -v /Users/raylandjeans/dev:/opt/dev -t -i css /bin/bash 
+}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# eval $(shell init bash)
+export PATH="/opt/chefdk/bin:/Users/raylandjeans/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/embedded/bin:/opt/chefdk/bin:/Users/raylandjeans/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/embedded/bin:/Users/raylandjeans/.rvm/gems/ruby-2.1.2/bin:/Users/raylandjeans/.rvm/gems/ruby-2.1.2@global/bin:/Users/raylandjeans/.rvm/rubies/ruby-2.1.2/bin:/Users/raylandjeans/.rvm/bin:/opt/chefdk/bin:/Users/raylandjeans/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/embedded/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/go/bin:/Users/raylandjeans/bin:/Users/raylandjeans/dev/go/bin:/usr/local/sbin:/Users/raylandjeans/.fzf/bin:/bin"
+export GEM_ROOT="/opt/chefdk/embedded/lib/ruby/gems/2.1.0"
+export GEM_HOME="/Users/raylandjeans/.chefdk/gem/ruby/2.1.0"
+export GEM_PATH="/Users/raylandjeans/.chefdk/gem/ruby/2.1.0:/opt/chefdk/embedded/lib/ruby/gems/2.1.0"
+
+export HISTCONTROL=ignoredups
