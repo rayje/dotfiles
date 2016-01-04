@@ -5,43 +5,34 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 
-Plug 'gmarik/vundle'
+" Plug 'gmarik/vundle'
 
-Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-dispatch'
 Plug 'sheerun/vim-polyglot'
-
 Plug 'kshenoy/vim-signature'
 Plug 'fatih/vim-go'
 Plug 'christoomey/vim-tmux-navigator'
-
-" Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'tmhedberg/matchit'
+Plug 'mtth/scratch.vim'
 
 " Color Themes
 Plug 'flazz/vim-colorschemes'
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 call plug#end()
 
-" colorscheme Monokai
-" colorscheme ray
 colorscheme rayje
 
 """"""""
-if has('autocmd')
-  filetype plugin indent on
-endif
-
-if has('syntax') && !exists('g:syntax_on')
-  syntax enable
-endif
-
 if has('clipboard')
   if $TMUX == ''
     set clipboard+=unnamed
@@ -49,34 +40,18 @@ if has('clipboard')
 endif
 
 " Use :help 'option' to see the documentation for the given option.
-set autoindent
-set backspace=indent,eol,start
-set complete-=i
 set showmatch
 set showmode
-set smarttab
 
-set nrformats-=octal
 set shiftround
 
-set ttimeout
-set ttimeoutlen=50
-
-set incsearch
 " Use ,c to clear the highlighting of :set hlsearch.
 nnoremap <silent> <leader>c :nohl<CR>
 
-set laststatus=2
-set ruler
 set showcmd
-set wildmenu
-
-set autoread
 
 set encoding=utf-8
 set tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-" set listchars=tab:▒░,trail:▓
-" set list
 
 inoremap <C-U> <C-G>u<C-U>
 
@@ -124,34 +99,15 @@ let g:did_UltiSnips_vim_after = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-" Find
-map <C-f> /
-" indend / deindent after selecting the text with (⇧ v), (.) to repeat.
-" vnoremap <Tab> >
-" vnoremap <S-Tab> <
 " comment / decomment & normal comment behavior
 vmap <C-m> gc
 " Disable tComment to escape some entities
 let g:tcomment#replacements_xml={}
-" Text wrap simpler, then type the open tag or ',"
-" vmap <C-w> S
-" Tabs
-" let g:airline_theme='base16'
-" let g:airline_theme='murmur'
-let g:airline_theme='bubblegum'
-" let g:airline_theme='badwolf'
-let g:airline#extensions#tabline#enabled = 1
-" nnoremap <C-b>  :tabprevious<CR>
-" inoremap <C-b>  <Esc>:tabprevious<CR>i
-" nnoremap <C-n>  :tabnext<CR>
-" inoremap <C-n>  <Esc>:tabnext<CR>i
-" nnoremap <C-t>  :tabnew<CR>
-" inoremap <C-t>  <Esc>:tabnew<CR>i
-" nnoremap <C-k>  :tabclose<CR>
-" inoremap <C-k>  <Esc>:tabclose<CR>i
 
-" lazy ':'
-map \ :
+let g:airline_theme='bubblegum'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#close_symbol = 'X'
 
 let mapleader = ','
 nnoremap <Leader>p :set paste<CR>
@@ -184,3 +140,51 @@ map <C-l> <C-w>l
 
 nnoremap <C-n> :bnext<CR>
 nnoremap <C-b> :bprevious<CR>
+
+map <C-t> :NERDTreeToggle<CR>
+
+" Close current buffer and open previous buffer
+nmap ,d :b#<bar>bd!#<CR>
+
+" fugitive git bindings
+nnoremap <space>ga :Git add %:p<CR><CR>
+nnoremap <space>gs :Gstatus<CR>
+nnoremap <space>gc :Gcommit -v -q<CR>
+nnoremap <space>gt :Gcommit -v -q %:p<CR>
+nnoremap <space>gd :Gdiff<CR>
+nnoremap <space>ge :Gedit<CR>
+nnoremap <space>gr :Gread<CR>
+nnoremap <space>gw :Gwrite<CR><CR>
+nnoremap <space>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <space>gp :Ggrep<Space>
+nnoremap <space>gm :Gmove<Space>
+nnoremap <space>gb :Git branch<Space>
+nnoremap <space>go :Git checkout<Space>
+nnoremap <space>gps :Gpush<Space>
+nnoremap <space>gpl :Dispatch! git pull<CR>
+
+nnoremap <C-x>v :e ~/.vimrc<CR>
+nnoremap <C-x>t :e ~/.tmux.conf<CR>
+
+" let g:scratch_height = 1
+let g:scratch_top = 0
+let g:scratch_horizontal = 0
+let g:scratch_autohide = 0
+
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set nornu
+    else
+        set rnu
+    endif
+endfunc
+
+nnoremap <Leader>n :call NumberToggle()<CR>
+autocmd InsertEnter * :set nornu
+autocmd InsertLeave * :set rnu
+
+" Disable arrow keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
