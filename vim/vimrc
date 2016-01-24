@@ -23,10 +23,10 @@ Plug 'fatih/vim-go'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tmhedberg/matchit'
-Plug 'mtth/scratch.vim'
+" Plug 'mtth/scratch.vim'
 
 " Color Themes
-Plug 'flazz/vim-colorschemes'
+" Plug 'flazz/vim-colorschemes'
 
 call plug#end()
 
@@ -38,6 +38,8 @@ if has('clipboard')
     set clipboard+=unnamed
   endif
 endif
+
+set synmaxcol=120
 
 " Use :help 'option' to see the documentation for the given option.
 set showmatch
@@ -56,12 +58,12 @@ set tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 inoremap <C-U> <C-G>u<C-U>
 
 set number
-set hlsearch
+" set hlsearch
 set ignorecase
 set smartcase
 
 " Don't use Ex mode, use Q for formatting
-map Q gq
+" map Q gq
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -75,9 +77,6 @@ set nobackup
 set nowritebackup
 set noswapfile
 set fileformats=unix,dos,mac
-
-" exit insert mode 
-inoremap <C-c> <Esc>
 
 set completeopt=menuone,longest,preview
 
@@ -113,6 +112,7 @@ let mapleader = ','
 nnoremap <Leader>p :set paste<CR>
 nnoremap <Leader>o :set nopaste<CR>
 noremap  <Leader>g :GitGutterToggle<CR>
+set pastetoggle=<F2>
 
 nmap  <Leader>w <Plug>CtrlSFCwordExec
 noremap <Leader>v :source ~/.vimrc<CR>
@@ -165,6 +165,7 @@ nnoremap <space>gpl :Dispatch! git pull<CR>
 
 nnoremap <C-x>v :e ~/.vimrc<CR>
 nnoremap <C-x>t :e ~/.tmux.conf<CR>
+nnoremap <C-x>c :e ~/.vim/colors/rayje.vim<CR>
 
 " let g:scratch_height = 1
 let g:scratch_top = 0
@@ -180,11 +181,14 @@ function! NumberToggle()
 endfunc
 
 nnoremap <Leader>n :call NumberToggle()<CR>
-autocmd InsertEnter * :set nornu
-autocmd InsertLeave * :set rnu
+"autocmd InsertEnter * :set nornu
+"autocmd InsertLeave * :set rnu
 
 " Disable arrow keys
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+
+nnoremap j gj
+nnoremap k gk
