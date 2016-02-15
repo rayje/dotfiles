@@ -53,7 +53,7 @@ set showmode
 set shiftround
 
 " Use ,c to clear the highlighting of :set hlsearch.
-nnoremap <silent> <leader>c :nohl<CR>
+nnoremap <silent> <Leader>c :nohl<CR>
 
 set showcmd
 
@@ -230,6 +230,15 @@ set pastetoggle=<Leader>pt
 map <leader>ro :call OpenRanger()<CR>
 nnoremap <Leader>\ <C-w>v<C-w>l
 nnoremap <Leader>- <C-w>s<C-w>j
+
+" Keep searchin center
+nnoremap n nzzzv
+nnoremap N Nzzzv
+" Command mode
+cnoremap <C-a> <home>
+cnoremap <C-e> <end>
+" Split line
+nnoremap S i<CR><ESC><RIGHT>
 
 noremap <Leader>gd :GoDef<CR>
 
