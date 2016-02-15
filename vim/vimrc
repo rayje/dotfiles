@@ -226,10 +226,10 @@ noremap <Leader>pi :PlugInstall<CR>
 noremap <Leader>pu :PlugUpgrade<CR>
 noremap <Leader>pc :PlugClean<CR>
 
+set pastetoggle=<Leader>pt
+map <leader>ro :call OpenRanger()<CR>
 nnoremap <Leader>\ <C-w>v<C-w>l
 nnoremap <Leader>- <C-w>s<C-w>j
-
-
 
 noremap <Leader>gd :GoDef<CR>
 
@@ -240,8 +240,7 @@ if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects
-  " .gitignore
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
   " ag is fast enough that CtrlP doesn't need to cache
