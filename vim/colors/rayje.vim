@@ -137,6 +137,10 @@ hi goBoolean ctermfg=31 ctermbg=NONE cterm=bold
 
 "==========================================================================
 
+hi TagbarSignature ctermfg=244 ctermbg=NONE cterm=NONE
+hi TagbarHighlight ctermfg=88 ctermbg=NONE cterm=NONE
+" hi TagbarKind ctermfg=NONE ctermbg=NONE cterm=NONE
+"
 
 hi Underlined ctermfg=NONE ctermbg=NONE cterm=underline guifg=NONE guibg=NONE gui=underline
 hi rubyClass ctermfg=197 ctermbg=NONE cterm=NONE guifg=#f92672 guibg=NONE gui=NONE
