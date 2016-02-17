@@ -28,6 +28,7 @@ Plug 'benmills/vimux'
 Plug 'dangerzone/ranger.vim'
 Plug 'majutsushi/tagbar'
 Plug 'rbgrouleff/bclose.vim'
+Plug 'vim-scripts/CursorLineCurrentWindow'
 " Plug 'ajk17/VimCompletesMe'
 " Plug 'xolox/vim-easytags'
 " Plug 'xolox/vim-misc'
@@ -243,6 +244,8 @@ nnoremap S i<CR><ESC><RIGHT>
 noremap <Leader>gd :GoDef<CR>
 
 nnoremap <silent> <Leader>bd :Bclose<CR>
+nnoremap <Leader>l :set cursorline!<CR>
+
 
 " The Silver Searcher
 if executable('ag')
