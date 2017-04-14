@@ -10,24 +10,29 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tomtom/tcomment_vim'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sensible'
+Plug 'rayje/vim-sensible'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-obsession'
+" Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-dispatch'
-Plug 'sheerun/vim-polyglot'
-Plug 'kshenoy/vim-signature'
+" Plug 'sheerun/vim-polyglot'
+" Plug 'kshenoy/vim-signature'
 Plug 'fatih/vim-go'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tmhedberg/matchit'
 Plug 'benmills/vimux'
-Plug 'dangerzone/ranger.vim'
+" Plug 'dangerzone/ranger.vim'
+Plug 'francoiscabrol/ranger.vim'
 Plug 'majutsushi/tagbar'
 Plug 'rbgrouleff/bclose.vim'
+" Plug 'moll/vim-bbye'
+Plug 'miyakogi/conoline.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Plug 'ajk17/VimCompletesMe'
 " Plug 'xolox/vim-easytags'
 " Plug 'xolox/vim-misc'
@@ -44,7 +49,7 @@ colorscheme rayje
 
 """"""""
 set clipboard=unnamed
-" set synmaxcol=120
+" set synmaxcol=12
 
 " Use :help 'option' to see the documentation for the given option.
 set showmatch
@@ -53,7 +58,7 @@ set showmode
 set shiftround
 
 " Use ,c to clear the highlighting of :set hlsearch.
-nnoremap <silent> <leader>c :nohl<CR>
+nnoremap <silent> <Leader>hl :nohl<CR>
 
 set showcmd
 
@@ -92,17 +97,17 @@ set completeopt=menuone,longest,preview
 "
 
 " CtrlP
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.data/* 
+let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 
 " Set tags location
 set tags=./tags;
 
 " Ultisnip
 " NOTE: <f1> otherwise it overrides <tab> forever
-let g:UltiSnipsExpandTrigger="<f1>"
-let g:UltiSnipsJumpForwardTrigger="<f1>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:did_UltiSnips_vim_after = 1
+" let g:UltiSnipsExpandTrigger="<f1>"
+" let g:UltiSnipsJumpForwardTrigger="<f1>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:did_UltiSnips_vim_after = 1
 
 " vim-airline
 let g:airline_theme='bubblegum'
@@ -112,15 +117,16 @@ let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#tabline#close_symbol = 'X'
 
 " comment / decomment & normal comment behavior
-vmap <C-m> gc
+" vmap <C-m> gc
 " Disable tComment to escape some entities
 let g:tcomment#replacements_xml={}
 
 
 let mapleader = ','
-nnoremap <Leader>p :set paste<CR>
-nnoremap <Leader>o :set nopaste<CR>
-noremap  <Leader>g :GitGutterToggle<CR>
+" nnoremap <Leader>p :set paste<CR>
+" nnoremap <Leader>o :set nopaste<CR>
+" noremap  <Leader>g :GitGutterToggle<CR>
+let g:gitgutter_realtime = 0
 set pastetoggle=<F2>
 
 " ctrlsf
@@ -128,18 +134,12 @@ nmap  <Leader>sw <Plug>CtrlSFCwordExec
 nmap  <Leader>sf <Plug>CtrlSFPrompt
 nnoremap <Leader>st :CtrlSFToggle<CR>
 
-" this machine config
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
 let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-
 
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -150,9 +150,6 @@ nnoremap <C-n> :bnext<CR>
 nnoremap <C-b> :bprevious<CR>
 
 noremap <Leader>nt :NERDTreeToggle<CR>
-
-" Close current buffer and open previous buffer
-nmap <Leader>d :b#<bar>bd!#<CR>
 
 " fugitive git bindings
 nnoremap <space>ga :Git add %:p<CR><CR>
@@ -180,6 +177,8 @@ noremap <Leader>v :source ~/.vimrc<CR>
 let g:scratch_top = 0
 let g:scratch_horizontal = 0
 let g:scratch_autohide = 0
+
+let g:conoline_auto_enable = 1
 
 function! NumberToggle()
     if(&relativenumber == 1)
@@ -229,11 +228,15 @@ noremap <Leader>pc :PlugClean<CR>
 nnoremap <Leader>\ <C-w>v<C-w>l
 nnoremap <Leader>- <C-w>s<C-w>j
 
-
+noremap <Leader>ce :ConoLineEnable<CR>
+noremap <Leader>cd :ConoLineDisable<CR>
 
 noremap <Leader>gd :GoDef<CR>
 
 nnoremap <silent> <Leader>bd :Bclose<CR>
+nnoremap <Leader>sp i<CR><ESC>
+
+nnoremap Q <nop>
 
 " The Silver Searcher
 if executable('ag')
@@ -251,3 +254,16 @@ endif
 if has('nvim')
     nmap <silent> <bs> :<c-u>TmuxNavigateLeft<cr>
 endif
+
+autocmd BufRead *.rb setlocal syntax=off
+
+nmap <Leader>cf :let @*=expand("%")<CR>
+nmap <Leader>cp :let @*=expand("%:p")<CR>
+
+noremap s <NOP>
+cnoremap W w<CR>
+
+set re=1
+
+nnoremap <Leader>Q :%s/=\(\x\x\<BAR>\n\)/\=submatch(1)=='\n'?'':nr2char('0x'.submatch(1))/ge<CR>
+vnoremap <Leader>Q :s/=\(\x\x\<BAR>\n\)/\=submatch(1)=='\n'?'':nr2char('0x'.submatch(1))/ge<CR>
