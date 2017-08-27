@@ -1,0 +1,14 @@
+[user]
+    email = dev.rayje@gmail.com
+    name = Ray
+[color]
+    ui = auto
+[push]
+    default = simple
+[alias]
+    ll = log --graph --oneline --decorate
+    la = log --graph --oneline --decorate --all
+    co = checkout
+    br = branch
+    cm = commit
+    st = status
