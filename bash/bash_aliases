@@ -32,6 +32,7 @@ go_dir() {
 USER=$(id -un)
 export PS1='\[\033]0;${USER}@${HOST} \w\007\033['${PROMPT_COLOR:-36m}'\]${USER}@${HOST} \w\n\[\033[30;0m\]$ '
 
+alias ul="unzip -l"
 alias l="ls -ltr"
 alias la="ls -latr"
 alias vi=$(which vim)
