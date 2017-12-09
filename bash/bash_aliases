@@ -14,7 +14,13 @@ findjar() {
     if [[ $# != '2' ]]; then
         echo "Usage: findjar dir2search class"
     else
-        for i in $(find $1 -name '*.jar'); do ul $i | grep $2 >/dev/null; if [[ $? == '0' ]]; then echo $i; fi; done
+        for i in $(find $1 -name '*.jar'); do 
+            unzip -l $i | grep $2 >/dev/null
+            
+            if [[ $? == '0' ]]; then 
+                echo $i
+            fi
+        done
     fi
 }
 
@@ -27,7 +33,6 @@ go_dir() {
         cd $dir
     fi
 }
-
 
 USER=$(id -un)
 export PS1='\[\033]0;${USER}@${HOST} \w\007\033['${PROMPT_COLOR:-36m}'\]${USER}@${HOST} \w\n\[\033[30;0m\]$ '
