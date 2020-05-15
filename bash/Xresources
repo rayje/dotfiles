@@ -1,0 +1,73 @@
+URxvt*background:  #151718
+URxvt*foreground:  #d6d6d6
+URxvt*cursorColor: #d6d6d6
+
+URxvt.font: xft:monaco:size=11.5
+URxvt.scrollBar: false
+URxvt*highlightColor:     #3B758C
+URxvt*highlightTextColor: #43a5d5
+URxvt.geometry: 150x54
+
+!
+! URxvt*font: xft:Terminess Powerline:size=10
+!
+! xdu.font:            -*-helvetica-bold-r-normal--18-*
+! xdu.showsize:        False
+! xdu.order:           size
+! xdu*help*foreground: green
+! xdu*help*background: red4
+! xdu*help*font:       -*-helvetica-bold-r-normal--18-*
+!
+!
+URxvt*color0:  #151718
+URxvt*color1:  #Cd3f45
+URxvt*color2:  #9fca56
+URxvt*color3:  #e6cd69
+URxvt*color4:  #55b5db
+URxvt*color5:  #a074c4
+URxvt*color6:  #55dbbe
+URxvt*color7:  #d6d6d6
+URxvt*color8:  #41535B
+URxvt*color9:  #Cd3f45
+URxvt*color10: #9fca56
+URxvt*color11: #e6cd69
+URxvt*color12: #55b5db
+URxvt*color13: #a074c4
+URxvt*color14: #55dbbe
+URxvt*color15: #ffffff
+
+! 256 color space
+URxvt*color16: #db7b55
+URxvt*color17: #8a553f
+URxvt*color18: #8ec43d
+URxvt*color19: #3B758C
+URxvt*color20: #43a5d5
+URxvt*color21: #eeeeee
+!
+! !! xterm colors
+! ! normal
+! xterm*color0:  #000000
+! xterm*color1:  #B40000
+! xterm*color2:  #00AA00
+! xterm*color3:  #AAAA00
+! xterm*color4:  #5555AA
+! xterm*color5:  #CC00CC
+! xterm*color6:  #00AAAA
+! xterm*color7:  #AAAAAA
+! ! bright (bold)
+! xterm*color8:  #555555
+! xterm*color9:  #FFF000
+! xterm*color10: #00DD00
+! xterm*color11: #FFFF00
+! xterm*color12: #6464FF
+! xterm*color13: #FF00FF
+! xterm*color14: #00EEEE
+! xterm*color15: #DDDDDD
+!
+
+URxvt.perl-ext-common: fullscreen
+URxvt.keysym.F8: perl:fullscreen:switch
+!
+URxvt.urlLauncher: firefox
+URxvt.underlineURLs: true
+URxvt.urlButton: 1
